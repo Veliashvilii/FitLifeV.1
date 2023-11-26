@@ -1,0 +1,95 @@
+{% extends "layout.html" %} 
+
+{% block pageTitle %} Home {% endblock %} 
+
+{% block content %}
+<div class="container">
+  <div class="showcase-content">
+    <h1><span class="text" style="color: #50a85e">Never</span> Give Up</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda dignissimos earum sapiente animi saepe architecto. Reiciendis a laboriosam sequi fuga nostrum modi, veritatis ea ad sed quisquam porro cupiditate nam!</p>
+    <a href="/signup" class="btn" style="background-color: #50a85e; color: #FFFFFF;">Sign Up</a>
+  </div>
+</div>
+
+<div id="features">
+  <div class="box">
+    <i class="fa-solid fa-users fa-3x"></i>
+    <h3>Experienced Trainers</h3>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione, fugit.</p>
+  </div>
+  <div class="box bg-green">
+    <i class="fa-solid fa-money-bill-wave fa-3x"></i>
+    <h3>Reasonable Price</h3>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione, fugit.</p>
+  </div>
+  <div class="box">
+    <i class="fa-regular fa-face-smile fa-3x"></i>
+    <h3>Healthy Lifestyle</h3>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione, fugit.</p>
+  </div>
+</div>
+
+<div class="clr"></div>
+
+
+
+{% endblock %}
+
+{% block style %}
+<style>
+
+  .container{
+    margin: 0;
+    padding: 0;
+  }
+
+  .navbar{
+    padding-left: 20px;
+  }
+
+  .bg-green{
+    background: #50a85e;
+    color: #FFFFFF;
+  }
+
+ .container .showcase-content{
+  background: url('https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg') no-repeat center center/cover;
+  height: 600px;
+  width: 100vw;
+  text-align: center;
+  color: #F1F1F1;
+  padding-top: 235px;
+ }
+
+ .container .showcase-content h1{
+  font-size: 60px;
+  line-height: 1.2em;
+ }
+
+ .container .showcase-content p{
+  font-size: 20px;
+  line-height: 1.7em;
+ }
+
+ .box{
+  float: left;
+  width: 33.3%;
+  padding: 20px;
+  text-align: center;
+ }
+
+ .box i{
+  margin-bottom: 10px;
+ }
+
+ .main-footer{
+  text-align: center;
+  background: #F1F1F1;
+  padding: 20px;
+ }
+
+ .clr{
+  clear: both;
+ }
+</style>
+{% endblock %}

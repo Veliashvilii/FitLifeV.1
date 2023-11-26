@@ -1,0 +1,157 @@
+{% extends "layout.html" %} 
+
+{% block pageTitle %} Sign Up {% endblock %} 
+
+{% block content %}
+<div class="content-body">
+  <div class="center">
+    <h1><span class="text-green">Sign Up</span> Panel</h1>
+    <form action="#">
+      <div class="txt-field">
+        <input type="text" required>
+        <span></span>
+        <label>Name</label>
+      </div>
+      <div class="txt-field">
+        <input type="text" required>
+        <span></span>
+        <label>Surname</label>
+      </div>
+      <div class="txt-field">
+        <input type="email" required>
+        <span></span>
+        <label>Email</label>
+      </div>
+      <div class="txt-field">
+        <input type="password" required>
+        <span></span>
+        <label>Password</label>
+      </div>
+      <div class="txt-field">
+        <input type="password" required>
+        <span></span>
+        <label>Confirm Password</label>
+      </div>
+      <button class="btn">Sign Up</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block style %}
+<style>
+
+  .text-green{
+    color: #50a85e;
+  }
+
+  .content-body{
+    margin: 0;
+    padding: 0;
+    background: #F1F1F1;
+    background-size: cover;
+    bacground-position: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .center{
+    position: absolute;
+    height: 80%;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background: white;
+    border-radius: 10px;
+  }
+
+  .center h1{
+    margin-top: 10px;
+    text-align: center;
+    padding: 0 0 20px 0;
+    border-bottom: 1px solid silver;
+  }
+
+  .center form{
+    padding: 0 40px;
+    box-sizing: border-box;
+  }
+
+  form .txt-field{
+    position: relative;
+    border-bottom: 2px solid #adadad;
+    margin: 30px 0;
+  }
+
+  .txt-field input{
+    width: 100%;
+    padding: 0 5px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+  }
+
+  .txt-field label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #adadad;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    transition: .5s;
+  }
+
+  .txt-field span::before{
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #50a85e;
+    transition: .5s; 
+  }
+
+  .txt-field input:focus ~ label,
+  .txt-field input:valid ~ label{
+    top: -5px;
+    color: #50a85e;
+  }
+
+  .txt-field input:focus ~ span::before,
+  .txt-field input:valid ~ label::before{
+    width: 100%;
+  }
+
+  .btn{
+    width: 100%;
+    height: 50px;
+    border: 1px solid;
+    background: #50a85e;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #f1f1f1;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .btn:hover{
+    background: #50a85e;
+    color: #f1f1f1;
+    transition: .5s;
+  }
+
+  .main-footer{
+    text-align: center;
+    background: #50a85e;
+    color: #FFFFFF;
+    padding: 20px;
+   }
+
+</style>
+{% endblock %}

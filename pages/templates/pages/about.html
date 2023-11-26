@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %} About {% endblock %}
+
+{% block content %}
+<section id="about-info">
+  <div class="container">
+    <div class="info-left">
+      <h1><span class="text-green">About</span> FitLife</h1>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt explicabo, eveniet sequi facilis iure veniam sed, tenetur accusantium atque corporis sapiente dignissimos doloremque cumque! Molestiae ea architecto rerum voluptates dignissimos provident aliquid cum pariatur aliquam.</p>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur tenetur vel porro odit! Enim sapiente neque magni reiciendis. Ratione ut impedit at quos. Atque, tempore.</p>
+    </div>
+    <div class="info-right">
+      <img src="{{ image_url }}" alt="Running Photo">
+    </div>
+  </div>
+  
+</section>
+{% endblock %}
+
+{% block style %}
+<style>
+
+  .text-green{
+    color: #50a85e;
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .info-left {
+    width: 60%;
+  }
+
+  .info-right {
+    width: 35%;
+    border-radius: 25%;
+    overflow: hidden;
+  }
+
+  .info-right img {
+    margin: auto;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .main-footer{
+    text-align: center;
+    background: #50a85e;
+    color: #FFFFFF;
+    padding: 20px;
+   }
+
+</style>
+{% endblock %}
