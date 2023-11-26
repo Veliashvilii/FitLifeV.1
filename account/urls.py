@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -6,4 +6,5 @@ urlpatterns = [
     path('register', views.user_register, name="user_register"),
     path('forgot', views.user_forgot, name="user_forgot"),
     path('logout', views.user_logout, name="user_logout"), 
+    path('users/', include('users.urls')),
 ]
