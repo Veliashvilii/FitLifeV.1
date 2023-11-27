@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 def user_login(request):
 
   if request.user.is_authenticated:
-    return redirect('/users/home')
+    return render(request, 'users/home.html')
 
   if request.method == "POST":
     username = request.POST["username"]
@@ -17,7 +17,8 @@ def user_login(request):
     user = authenticate(request, username=username, password=password)
     if user is not None:
       login(request, user)
-      return redirect('/users/home')
+      #redirect('/users/home')
+      return render(request, 'users/home.html')
     else:
       return render(request, 'account/login.html', {"error":"Email or Password Incorrect!"})
   return render(request, 'account/login.html')
