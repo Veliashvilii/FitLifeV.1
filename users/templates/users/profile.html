@@ -1,6 +1,6 @@
-{% extends "layout.html" %} 
+{% extends "layout.html" %}
 
-{% block pageTitle %} Profile {% endblock %} 
+{% block pageTitle %} Profile {% endblock %}
 
 {% block content %}
 <div class="content-body">
@@ -14,22 +14,27 @@
         </div>
       {% endif %}
       <div class="txt-field">
-        <input type="text" name="first_name" placeholder="{{ first_name }}">
+        <input type="text" name="first_name" value="{{ first_name }}">
         <span></span>
         <label>First Name</label>
       </div>
       <div class="txt-field">
-        <input type="text" name="last_name" placeholder="{{ last_name }}">
+        <input type="text" name="last_name" value="{{ last_name }}">
         <span></span>
         <label>Last Name</label>
       </div>
       <div class="txt-field">
-        <input type="email" name="email" placeholder="{{ email }}">
+        <input type="email" name="email" value="{{ email }}">
         <span></span>
         <label>Email</label>
       </div>
       <div class="txt-field">
-        <input type="text" name="username" placeholder="{{ username }}">
+        <input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="555 555 5555">
+        <span></span>
+        <label>Phone Number</label>
+      </div>
+      <div class="txt-field">
+        <input type="text" name="username" value="{{ username }}">
         <span></span>
         <label>Username</label>
       </div>
@@ -67,13 +72,11 @@
 </div>
 {% endblock %}
 
-
 {% block style %}
 <style>
   .text-green {
     color: #50a85e;
   }
-
   .content-body {
     margin: 0;
     padding: 0;
@@ -86,11 +89,11 @@
 
   .center {
     position: absolute;
-    height: 100%;
+    height: 93%;
     top: 58%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
+    width: 600px;
     background: white;
     border-radius: 10px;
   }
@@ -105,7 +108,7 @@
   .center form {
     padding: 0 40px;
     box-sizing: border-box;
-    margin-bottom: 20px; /* Increase bottom margin */
+    margin-bottom: 20px;
   }
 
   form .txt-field {
@@ -117,7 +120,7 @@
   .txt-field input {
     width: 100%;
     padding: 0 5px;
-    height: 40px;
+    height: 20px;
     font-size: 16px;
     border: none;
     background: none;
@@ -126,10 +129,9 @@
 
   .txt-field label {
     position: absolute;
-    top: 50%;
+    top: 0;
     left: 5px;
     color: #adadad;
-    transform: translateY(-50%);
     font-size: 16px;
     pointer-events: none;
     transition: .5s;
@@ -148,13 +150,8 @@
 
   .txt-field input:focus ~ label,
   .txt-field input:valid ~ label {
-    top: -5px;
+    top: -20px;
     color: #50a85e;
-  }
-
-  .txt-field input:focus ~ span::before,
-  .txt-field input:valid ~ label::before {
-    width: 100%;
   }
 
   .txt-field select + label {
@@ -162,7 +159,6 @@
     top: -20px;
     left: 5px;
     color: #50a85e;
-    transform: translateY(0);
     font-size: 16px;
     pointer-events: none;
     transition: .5s;
@@ -179,7 +175,7 @@
     color: #000;
   }
 
-  .btn{
+  .btn {
     width: 100%;
     height: 40px;
     border: 1px solid;
@@ -217,10 +213,9 @@
 
   .photo label {
     position: absolute;
-    top: 50%;
+    top: 0;
     left: 5px;
     color: #adadad;
-    transform: translateY(-50%);
     font-size: 16px;
     pointer-events: none;
     transition: .5s;
@@ -239,7 +234,7 @@
 
   .photo input:focus ~ label,
   .photo input:valid ~ label {
-    top: -5px;
+    top: -20px;
     color: #50a85e;
   }
 
@@ -247,6 +242,5 @@
   .photo input:valid ~ label::before {
     width: 100%;
   }
-
 </style>
 {% endblock %}

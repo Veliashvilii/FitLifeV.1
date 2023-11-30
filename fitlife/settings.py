@@ -80,12 +80,8 @@ WSGI_APPLICATION = 'fitlife.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fitlifedatabase',
-        'USER': 'postgres',
-        'PASSWORD': '123456.+Met',
-        'HOST': 'fitlife-database.cdaxi6hb7hqd.eu-north-1.rds.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "mydatabase1.sqlite3",
     }
 }
 
