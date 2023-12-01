@@ -13,6 +13,8 @@
           <p class="card-text">{{ user.email }}</p>
           <p class="card-text">{{ user.phone_number }}</p>
           <p class="card-text">{{ user.username }}</p>
+          <p class="card-text">{{ user.master_topic }}</p>
+          <p class="card-text">{{ user.experience }}</p>
           <p class="card-text">{{ user.date_of_birth|date:'Y-m-d' }}</p>
           <p class="card-text">{{ user.gender }}</p>
         </div>
@@ -42,6 +44,14 @@
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}" required>
+        </div>
+        <div class="mb-3">
+          <label for="master-topic" class="form-label">Master Topic</label>
+          <input type="text" class="form-control" id="master-topic" name="master-topic" value="{{ user.master_topic }}">
+        </div>
+        <div class="mb-3">
+          <label for="experience" class="form-label">Experience</label>
+          <input type="text" class="form-control" id="experience" name="experience" value="{{ user.experience }}" required>
         </div>
         <div class="mb-3">
           <label for="date_of_birth" class="form-label">Date of Birth</label>
