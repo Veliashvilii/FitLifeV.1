@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .models import CustomUser
+from users.models import UserExtra
 
 # Create your views here.
 
@@ -68,6 +69,7 @@ def user_register(request):
                         last_name=last_name,
                         is_user=True,
                     )
+                    user_extra = UserExtra.objects.create(user_id=user.id)
                     user.save()
                     return render(request, "account/login.html")
         else:

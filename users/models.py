@@ -10,9 +10,7 @@ class UserExtra(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     phone_number = models.CharField(max_length=15, null=True, blank=True)
     gender = models.CharField(max_length=10, null=True, blank=True)
-    profile_picture = models.ImageField(
-        upload_to="profile_pics/", null=True, blank=True
-    )
+    profile_picture = models.ImageField(upload_to="images", default="")
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
@@ -25,9 +23,7 @@ class TeacherExtra(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     phone_number = models.CharField(max_length=15, null=True, blank=True)
     gender = models.CharField(max_length=10, null=True, blank=True)
-    profile_picture = models.ImageField(
-        upload_to="profile_pics/", null=True, blank=True
-    )
+    profile_picture = models.ImageField(upload_to="images", default="")
     master_topic = models.CharField(max_length=60, null=True, blank=True)
     experience = models.CharField(max_length=140, null=True, blank=True)
 

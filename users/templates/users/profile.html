@@ -6,16 +6,20 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-4">
-      <div class="card shadow-sm">
-        <img src="{{ user.profile_photo }}" alt="Profile Photo" class="card-img-top">
-        <div class="card-body">
-          <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
-          <p class="card-text">{{ user.email }}</p>
-          <p class="card-text">{{ user.phone_number }}</p>
-          <p class="card-text">{{ user.username }}</p>
-          <p class="card-text">{{ user.date_of_birth|date:'Y-m-d' }}</p>
-          <p class="card-text">{{ user.gender }}</p>
-        </div>
+      <div class="card shadow-sm" style="background-color: #f1f1f1; border: none; text-align: center; padding: 20px;">
+        {% if user_extra.profile_picture %}
+          <img src="{{ user_extra.profile_picture.url }}" alt="Profil Fotoğrafı" class="card-img-top rounded-circle mx-auto" style="object-fit: cover; width: 150px; height: 150px;">
+        {% else %}
+          <p>No Profile Picture Available</p>
+        {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+        <p class="card-text">{{ user.email }}</p>
+        <p class="card-text">{{ user.phone_number }}</p>
+        <p class="card-text">{{ user.username }}</p>
+        <p class="card-text">{{ user_extra.birth_date|date:'d-m-Y' }}</p>
+        <p class="card-text">{{ user.gender }}</p>
+      </div>
       </div>
     </div>
     <div class="col-md-8">
@@ -37,29 +41,28 @@
         </div>
         <div class="mb-3">
           <label for="phone_number" class="form-label">Phone Number</label>
-          <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ user.phone_number }}">
+          <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ user_extra.phone_number }}">
         </div>
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}" required>
         </div>
         <div class="mb-3">
-          <label for="date_of_birth" class="form-label">Date of Birth</label>
-          <input type="date" class="form-control" id="date_of_birth" name="date_of_birth"
-            value="{{ user.date_of_birth|date:'Y-m-d' }}">
+          <label for="birth_date" class="form-label">Date of Birth</label>
+          <input type="date" class="form-control" id="birth_date" name="birth_date"
+            value="{{ user_extra.birth_date|date:'Y-m-d' }}">
         </div>
         <div class="mb-3">
           <label for="gender" class="form-label">Gender</label>
           <select class="form-select" id="gender" name="gender">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-            
-          </select>
+            <option value="male" {% if user_extra.gender == 'male' %}selected{% endif %}>Male</option>
+            <option value="female" {% if user_extra.gender == 'female' %}selected{% endif %}>Female</option>
+            <option value="other" {% if user_extra.gender == 'other' %}selected{% endif %}>Other</option>
+         </select>         
         </div>
         <div class="mb-3">
-          <label for="profile_photo" class="form-label">Profile Photo</label>
-          <input type="file" class="form-control" id="profile_photo" name="profile_photo">
+          <label for="profile_picture" class="form-label">Profile Photo</label>
+          <input type="file" class="form-control" id="profile_picture" name="profile_picture">
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
       </form>
@@ -82,6 +85,10 @@
     background-color: #ffffff;
     border: 1px solid #ddd;
     border-radius: 0;
+  }
+
+  .rounded-circle {
+    border-radius: 50%;
   }
 
   .form-label{

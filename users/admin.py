@@ -1,4 +1,5 @@
 from django.contrib import admin
+from account.models import CustomUser
 from .models import (
     UserExtra,
     UserCurrent,
@@ -21,3 +22,4 @@ admin.site.register(DailyPlanExercise)
 admin.site.register(Food)
 admin.site.register(DailyPlanFood)
 admin.site.register(FoodPlan)
+admin.site.register(CustomUser)
