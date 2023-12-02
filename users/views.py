@@ -70,17 +70,51 @@ def teachers_students(request):
 
 
 def teacher_profile(request):
+    teacher = request.user
+    teacher_extra = TeacherExtra.objects.get(user=teacher)
     if request.method == "GET":
-        user = request.user
-        # Kullanıcının TeacherExtra kaydını alın, eğer yoksa oluşturun.
-        teacher_extra, created = TeacherExtra.objects.get_or_create(
-            user=user, defaults={}
-        )
         return render(
             request,
             "users/teachersProfile.html",
             {
-                "user": user,
+                "teacher": teacher,
+                "teacher_extra": teacher_extra,
+            },
+        )
+    elif request.method == "POST":
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        email = request.POST.get("email")
+        username = request.POST.get("username")
+
+        phone_number = request.POST.get("phone_number")
+        birth_date = request.POST.get("birth_date")
+        gender = request.POST.get("gender")
+        master_topic = request.POST.get("master_topic")
+        experience = request.POST.get("experience")
+        profile_picture = request.FILES.get("profile_picture")
+
+        teacher.first_name = first_name
+        teacher.last_name = last_name
+        teacher.email = email
+        teacher.username = username
+        teacher.save()
+
+        teacher_extra.phone_number = phone_number
+        teacher_extra.birth_date = birth_date
+        teacher_extra.gender = gender
+        teacher_extra.master_topic = master_topic
+        teacher_extra.experience = experience
+
+        if profile_picture:
+            teacher_extra.profile_picture = profile_picture
+        teacher_extra.save()
+
+        return render(
+            request,
+            "users/teachersProfile.html",
+            {
+                "teacher": teacher,
                 "teacher_extra": teacher_extra,
             },
         )
