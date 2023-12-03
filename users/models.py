@@ -1,11 +1,42 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+from account.models import CustomUser
+
+
+class TeacherExtra(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
+    )
+    students = models.ManyToManyField(
+        CustomUser,
+        related_name="teachers",
+        blank=True,
+        limit_choices_to={"is_user": 1},
+    )
+
+    birth_date = models.DateField(null=True, blank=True)
+    phone_number = models.CharField(max_length=15, null=True, blank=True)
+    gender = models.CharField(max_length=10, null=True, blank=True)
+    profile_picture = models.ImageField(upload_to="images", default="")
+    master_topic = models.CharField(max_length=60, null=True, blank=True)
+    experience = models.CharField(max_length=140, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}"
 
 
 class UserExtra(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
+    )
+    trainer = models.ForeignKey(
+        CustomUser,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="user_trainer",
+        limit_choices_to={"is_user": 0},
     )
     birth_date = models.DateField(null=True, blank=True)
     phone_number = models.CharField(max_length=15, null=True, blank=True)
@@ -14,18 +45,6 @@ class UserExtra(models.Model):
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
-
-
-class TeacherExtra(models.Model):
-    user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
-    )
-    birth_date = models.DateField(null=True, blank=True)
-    phone_number = models.CharField(max_length=15, null=True, blank=True)
-    gender = models.CharField(max_length=10, null=True, blank=True)
-    profile_picture = models.ImageField(upload_to="images", default="")
-    master_topic = models.CharField(max_length=60, null=True, blank=True)
-    experience = models.CharField(max_length=140, null=True, blank=True)
 
 
 class UserCurrent(models.Model):
@@ -58,7 +77,9 @@ class Movement(models.Model):
 
 
 class ExerciseMovement(models.Model):
-    movement_type = models.ManyToManyField(Movement, blank=True)
+    movement_type = models.OneToOneField(
+        Movement, on_delete=models.CASCADE, blank=True, null=True
+    )
     set_value = models.IntegerField(blank=True, null=True)
     repeat_value = models.IntegerField(blank=True, null=True)
 
@@ -83,7 +104,7 @@ class DailyPlanExercise(models.Model):
         ("sunday", "Sunday"),
     ]
 
-    day = models.CharField(max_length=10, choices=DAY_CHOICES)
+    day = models.CharField(max_length=10, choices=DAY_CHOICES, blank=True)
     exercises = models.ManyToManyField(ExerciseMovement, blank=True)
 
     def get_day_display_name(self):
@@ -125,12 +146,34 @@ class DailyPlanFood(models.Model):
     ]
 
     day = models.CharField(max_length=10, choices=DAY_CHOICES)
-    breakfast_foods = models.ManyToManyField(
-        Food, related_name="breakfast_foods", blank=True
+    breakfast_foods = models.OneToOneField(
+        Food,
+        related_name="breakfast_foods",
+        blank=True,
+        on_delete=models.CASCADE,
+        null=True,
     )
-    lunch_foods = models.ManyToManyField(Food, related_name="lunch_foods", blank=True)
-    dinner_foods = models.ManyToManyField(Food, related_name="dinner_foods", blank=True)
-    daily_snacks = models.ManyToManyField(Food, related_name="daily_foods", blank=True)
+    lunch_foods = models.OneToOneField(
+        Food,
+        related_name="lunch_foods",
+        blank=True,
+        on_delete=models.CASCADE,
+        null=True,
+    )
+    dinner_foods = models.OneToOneField(
+        Food,
+        related_name="dinner_foods",
+        blank=True,
+        on_delete=models.CASCADE,
+        null=True,
+    )
+    daily_snacks = models.OneToOneField(
+        Food,
+        related_name="daily_foods",
+        blank=True,
+        on_delete=models.CASCADE,
+        null=True,
+    )
 
     def get_day_display_name(self):
         return dict(self.DAY_CHOICES).get(self.day, self.day)

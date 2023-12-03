@@ -10,6 +10,7 @@ from .models import (
     Food,
     DailyPlanFood,
     FoodPlan,
+    TeacherExtra,
 )
 
 # Register your models here.
@@ -23,3 +24,4 @@ admin.site.register(Food)
 admin.site.register(DailyPlanFood)
 admin.site.register(FoodPlan)
 admin.site.register(CustomUser)
+admin.site.register(TeacherExtra)
