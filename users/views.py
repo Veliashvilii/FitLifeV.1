@@ -23,7 +23,28 @@ def user_home(request):
 
 
 def user_diet(request):
-    return render(request, "users/mydiet.html")
+    user = request.user
+    user_extra = UserExtra.objects.get(user=user)
+    user_current = UserCurrent.objects.get(user=user)
+    if request.method == "POST":
+        form_type = request.POST.get("form_type")
+        if form_type == "current_info":
+            user_current.weight_kg = request.POST.get("weight")
+            user_current.height_cm = request.POST.get("height")
+            user_current.body_fat_percentage = request.POST.get("body_fat_percentage")
+            user_current.muscle_mass_kg = request.POST.get("muscle_mass_kg")
+            user_current.bmi = request.POST.get("bmi")
+            user_current.save()
+            return render(request, "users/mydiet.html")
+
+    return render(
+        request,
+        "users/mydiet.html",
+        {
+            "user_extra": user_extra,
+            "user": user,
+        },
+    )
 
 
 def user_profile(request):
