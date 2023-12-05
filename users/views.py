@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from . import models
+from account.models import CustomUser
 from .models import (
     UserExtra,
     TeacherExtra,
@@ -10,19 +11,30 @@ from .models import (
     Movement,
     Food,
     FoodPlan,
+    Message,
 )
 
 # Create your views here.
 
 
 def user_home(request):
-    return render(request, "users/home.html")
+    user = request.user
+    user_extra = UserExtra.objects.get(user=user)
+    return render(
+        request,
+        "users/profile.html",
+        {
+            "user": user,
+            "user_extra": user_extra,
+        },
+    )
 
 
 def user_diet(request):
     user = request.user
     user_extra = UserExtra.objects.get(user=user)
     user_extra.current_info, created = UserCurrent.objects.get_or_create()
+    user_extra.exercise_plan, created = ExercisePlan.objects.get_or_create()
 
     if request.method == "POST":
         form_type = request.POST.get("form_type")
@@ -35,7 +47,15 @@ def user_diet(request):
             user_extra.current_info.muscle_mass_kg = request.POST.get("muscle_mass_kg")
             user_extra.current_info.bmi = request.POST.get("bmi")
             user_extra.current_info.save()
-            return render(request, "users/mydiet.html")
+            return render(
+                request,
+                "users/mydiet.html",
+                {
+                    "user_extra": user_extra,
+                    "user": user,
+                    "user_extra.exercise_plan": user_extra.exercise_plan,
+                },
+            )
 
     return render(
         request,
@@ -43,6 +63,7 @@ def user_diet(request):
         {
             "user_extra": user_extra,
             "user": user,
+            "student_extra.exercise_plan": user_extra.exercise_plan,
         },
     )
 
@@ -94,7 +115,16 @@ def user_profile(request):
 
 
 def teacher_home(request):
-    return render(request, "users/teachersHome.html")
+    teacher = request.user
+    teacher_extra, created = TeacherExtra.objects.get_or_create(user=teacher)
+    return render(
+        request,
+        "users/teachersProfile.html",
+        {
+            "teacher": teacher,
+            "teacher_extra": teacher_extra,
+        },
+    )
 
 
 def teachers_students(request):
@@ -123,8 +153,8 @@ def teachers_students_info(request):
     student_extra.current_info, created = UserCurrent.objects.get_or_create()
     student_extra.exercise_plan, created = ExercisePlan.objects.get_or_create()
     movements = Movement.objects.all()
+    foods = Food.objects.all()
     if request.method == "GET":
-        # exercise_plan = student_extra.exercise_plan
         return render(
             request,
             "users/teachersStudentInfo.html",
@@ -133,6 +163,7 @@ def teachers_students_info(request):
                 "student_current": student_extra.current_info,
                 "movements": movements,
                 "student_extra.exercise_plan": student_extra.exercise_plan,
+                "foods": foods,
             },
         )
     elif request.method == "POST":
@@ -142,6 +173,8 @@ def teachers_students_info(request):
             student_extra, created = UserExtra.objects.get_or_create(
                 user__id=student_id
             )
+            student_extra.exercise_plan, created = ExercisePlan.objects.get_or_create()
+            student_extra.food_plan, created = FoodPlan.objects.get_or_create()
 
             monday_movement_id = request.POST.get("movement_type_monday")
             tuesday_movement_id = request.POST.get("movement_type_tuesday")
@@ -218,7 +251,79 @@ def teachers_students_info(request):
 
             student_extra.exercise_plan.save()
 
-            return HttpResponse(student_extra.exercise_plan.sunday)
+            return render(
+                request,
+                "users/teachersStudentInfo.html",
+                {
+                    "student_extra": student_extra,
+                    "student_current": student_extra.current_info,
+                    "movements": movements,
+                    "student_extra.exercise_plan": student_extra.exercise_plan,
+                    "foods": foods,
+                },
+            )
+        if form_type == "complate_exercise":
+            student_id = request.GET.get("student_id")
+            student_extra, created = UserExtra.objects.get_or_create(
+                user__id=student_id
+            )
+            student_extra.exercise_plan, created = ExercisePlan.objects.get_or_create()
+            student_extra.exercise_plan.goal = request.POST.get("plan_goal")
+            student_extra.exercise_plan.starting_date = request.POST.get(
+                "starting_date"
+            )
+            student_extra.exercise_plan.plan_duration = request.POST.get(
+                "program_duration"
+            )
+            student_extra.exercise_plan.save()
+
+            return render(
+                request,
+                "users/teachersStudentInfo.html",
+                {
+                    "student_extra": student_extra,
+                    "student_current": student_extra.current_info,
+                    "movements": movements,
+                    "student_extra.exercise_plan": student_extra.exercise_plan,
+                    "foods": foods,
+                },
+            )
+        if form_type == "diet_plan":
+            student_id = request.GET.get("student_id")
+            student_extra, created = UserExtra.objects.get_or_create(
+                user__id=student_id
+            )
+            student_extra.food_plan, created = FoodPlan.objects.get_or_create()
+
+            for meal_type in ["breakfast", "lunch", "dinner", "snacks"]:
+                for day in [
+                    "monday",
+                    "tuesday",
+                    "wednesday",
+                    "thursday",
+                    "friday",
+                    "saturday",
+                    "sunday",
+                ]:
+                    field_name = f"{meal_type}_{day}"
+                    food_id = request.POST.get(field_name)
+
+                    if food_id:
+                        student_extra.food_plan.set_meal(day, meal_type, food_id)
+
+            student_extra.food_plan.save()
+
+            return render(
+                request,
+                "users/teachersStudentInfo.html",
+                {
+                    "student_extra": student_extra,
+                    "student_current": student_extra.current_info,
+                    "movements": movements,
+                    "student_extra.exercise_plan": student_extra.exercise_plan,
+                    "foods": foods,
+                },
+            )
 
 
 def teacher_profile(request):
@@ -268,5 +373,79 @@ def teacher_profile(request):
             {
                 "teacher": teacher,
                 "teacher_extra": teacher_extra,
+            },
+        )
+
+
+def message_view_student(request):
+    if request.method == "POST":
+        sender = request.user
+        sender_extra = UserExtra.objects.get(user=sender)
+        content = request.POST.get("content")
+
+        receiver = CustomUser.objects.get(id=sender_extra.trainer.id)
+
+        Message.objects.create(sender=request.user, receiver=receiver, content=content)
+
+    messages = Message.objects.filter(sender=request.user) | Message.objects.filter(
+        receiver=request.user
+    )
+
+    return render(request, "users/messages.html", {"messages": messages})
+
+
+def message_view_teacher(request):
+    sender = request.user
+    sender_extra = TeacherExtra.objects.get(user=sender)
+
+    if request.method == "GET":
+        students = sender_extra.students.all()
+        students_extra = UserExtra.objects.filter(user__in=students)
+        global obj
+        obj = students_extra
+
+        return render(
+            request,
+            "users/messagesTeacher.html",
+            {
+                "sender": sender,
+                "sender_extra": sender_extra,
+                "students": students,
+                "students_extra": students_extra,
+            },
+        )
+
+
+def message_teacher_send(request):
+    sender = request.user
+    sender_extra = TeacherExtra.objects.get(user=sender)
+    student_extra = obj
+
+    if request.method == "GET":
+        return render(
+            request,
+            "users/messagesTeacherSend.html",
+            {
+                "sender": sender,
+                "sender_extra": sender_extra,
+            },
+        )
+    elif request.method == "POST":
+        content = request.POST.get("content")
+
+        Message.objects.create(sender=request.user, receiver=receiver, content=content)
+
+        messages = Message.objects.filter(sender=request.user) | Message.objects.filter(
+            receiver=request.user
+        )
+
+        return render(
+            request,
+            "users/messagesTeacherSend.html",
+            {
+                "sender": sender,
+                "sender_extra": sender_extra,
+                "student_extra": student_extra,
+                "messages": messages,
             },
         )

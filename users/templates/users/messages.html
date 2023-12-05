@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %} Messages {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div id="message-container">
+        {% for message in messages %}
+            <div class="card message-card">
+                <div class="card-body">
+                    <strong>{{ message.sender.username }}:</strong> {{ message.content }}
+                    <small class="text-muted">{{ message.timestamp }}</small>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <form method="post" action="{% url 'message_view_student'%}">
+        {% csrf_token %}
+        <div class="input-group mt-3">
+            <input type="text" class="form-control" name="content" placeholder="Mesajınızı yazın...">
+            <div class="input-group-append">
+              <button type="submit" class="btn" style="background: #50a85e; margin-top:10px; color: white;">Send</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block style %}
+<style>
+  body {
+    padding: 20px;
+  }
+  #message-container {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  .message-card {
+    margin-bottom: 10px;
+  }
+</style>
+</style>
+{% endblock  %}

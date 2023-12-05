@@ -14,4 +14,9 @@ urlpatterns = [
         name="teachers_students_info",
     ),
     path("teacher/profile", views.teacher_profile, name="teacher_profile"),
+    path("student/message", views.message_view_student, name="message_view_student"),
+    path("teacher/message", views.message_view_teacher, name="message_view_teacher"),
+    path(
+        "teacher/message/send", views.message_teacher_send, name="message_teacher_send"
+    ),
 ]

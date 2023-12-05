@@ -84,16 +84,211 @@ class FoodPlan(models.Model):
         max_digits=5, decimal_places=2, null=True, blank=True
     )
 
-    monday = models.ManyToManyField(Food, blank=True, related_name="monday_food")
-    tuesday = models.ManyToManyField(Food, blank=True, related_name="tuesday_food")
-    wednesday = models.ManyToManyField(Food, blank=True, related_name="wednesday_food")
-    thursday = models.ManyToManyField(Food, blank=True, related_name="thursday_food")
-    friday = models.ManyToManyField(Food, blank=True, related_name="friday_food")
-    saturday = models.ManyToManyField(Food, blank=True, related_name="saturday_food")
-    sunday = models.ManyToManyField(Food, blank=True, related_name="sunday_food")
+    monday_breakfast = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="monday_food_breakfast",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    monday_lunch = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="monday_food_lunch",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    monday_dinner = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="monday_food_dinner",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    monday_snacks = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="monday_food_snacks",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    tuesday_breakfast = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="tuesday_food_breakfast",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    tuesday_lunch = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="tuesday_food_lunch",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    tuesday_dinner = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="tuesday_food_dinner",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    tuesday_snacks = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="tuesday_food_snacks",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    wednesday_breakfast = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="wednesday_food_breakfast",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    wednesday_lunch = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="wednesday_food_lunch",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    wednesday_dinner = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="wednesday_food_dinner",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    wednesday_snacks = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="wednesday_food_snacks",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    thursday_breakfast = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="thursday_food_breakfast",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    thursday_lunch = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="thursday_food_lunch",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    thursday_dinner = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="thursday_food_dinner",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    thursday_snacks = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="thursday_food_snacks",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    friday_breakfast = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="friday_food_breakfast",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    friday_lunch = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="friday_food_lunch",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    friday_dinner = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="friday_food_dinner",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    friday_snacks = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="friday_food_snacks",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    saturday_breakfast = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="saturday_food_breakfast",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    saturday_lunch = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="saturday_food_lunch",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    saturday_dinner = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="saturday_food_dinner",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    saturday_snacks = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="saturday_food_snacks",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    sunday_breakfast = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="sunday_food_breakfast",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    sunday_lunch = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="sunday_food_lunch",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    sunday_dinner = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="sunday_food_dinner",
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    sunday_snacks = models.OneToOneField(
+        Food,
+        blank=True,
+        related_name="sunday_food_snacks",
+        null=True,
+        on_delete=models.CASCADE,
+    )
 
-    def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}"
+    def set_meal(self, day, meal_type, food_id):
+        meal_key = f"{meal_type}_{day}"
+        food_key = f"{meal_type}_food_{day}"
+
+        food = Food.objects.get(id=food_id)
+
+        setattr(self, food_key, food)
+        self.save()
 
 
 class UserCurrent(models.Model):
@@ -157,6 +352,10 @@ class UserExtra(models.Model):
         UserCurrent, on_delete=models.CASCADE, null=True, blank=True
     )
 
+    food_plan = models.OneToOneField(
+        FoodPlan, on_delete=models.CASCADE, null=True, blank=True
+    )
+
     birth_date = models.DateField(null=True, blank=True)
     phone_number = models.CharField(max_length=15, null=True, blank=True)
     gender = models.CharField(max_length=10, null=True, blank=True)
@@ -164,3 +363,17 @@ class UserExtra(models.Model):
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
+
+
+class Message(models.Model):
+    sender = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, related_name="sent_messages"
+    )
+    receiver = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, related_name="received_messages"
+    )
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.sender.username} to {self.receiver.username} - {self.timestamp}"

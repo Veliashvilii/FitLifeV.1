@@ -286,37 +286,65 @@
             <th>Breakfast</th>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="breakfast_monday" name="breakfast_monday">
+                <select class="form-control" id="breakfast_monday" name="breakfast_monday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="breakfast_tuesday" name="breakfast_tuesday">
+                <select class="form-control" id="breakfast_tuesday" name="breakfast_tuesday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="breakfast_wednesday" name="breakfast_wednesday">
+                <select class="form-control" id="breakfast_wednesday" name="breakfast_wednesday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="breakfast_thursday" name="breakfast_thursday">
+                <select class="form-control" id="breakfast_thursday" name="breakfast_thursday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="breakfast_friday" name="breakfast_friday">
+                <select class="form-control" id="breakfast_friday" name="breakfast_friday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="breakfast_saturday" name="breakfast_saturday">
+                <select class="form-control" id="breakfast_saturday" name="breakfast_saturday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="breakfast_sunday" name="breakfast_sunday">
+                <select class="form-control" id="breakfast_sunday" name="breakfast_sunday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
           </tr>
@@ -325,37 +353,65 @@
             <th>Lunch</th>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="lunch_monday" name="lunch_monday">
+                <select class="form-control" id="lunch_monday" name="lunch_monday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="lunch_tuesday" name="lunch_tuesday">
+                <select class="form-control" id="lunch_tuesday" name="lunch_tuesday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="lunch_wednesday" name="lunch_wednesday">
+                <select class="form-control" id="lunch_wednesday" name="lunch_wednesday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="lunch_thursday" name="lunch_thursday">
+                <select class="form-control" id="lunch_thursday" name="lunch_thursday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="lunch_friday" name="lunch_friday">
+                <select class="form-control" id="lunch_friday" name="lunch_friday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="lunch_saturday" name="lunch_saturday">
+                <select class="form-control" id="lunch_saturday" name="lunch_saturday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="lunch_sunday" name="lunch_sunday">
+                <select class="form-control" id="lunch_sunday" name="lunch_sunday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
           </tr>
@@ -364,37 +420,65 @@
             <th>Dinner</th>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="dinner_monday" name="dinner_monday">
+                <select class="form-control" id="dinner_monday" name="dinner_monday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="dinner_tuesday" name="dinner_tuesday">
+                <select class="form-control" id="dinner_tuesday" name="dinner_tuesday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="dinner_wednesday" name="dinner_wednesday">
+                <select class="form-control" id="dinner_wednesday" name="dinner_wednesday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="dinner_thursday" name="dinner_thursday">
+                <select class="form-control" id="dinner_thursday" name="dinner_thursday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="dinner_friday" name="dinner_friday">
+                <select class="form-control" id="dinner_friday" name="dinner_friday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="dinner_saturday" name="dinner_saturday">
+                <select class="form-control" id="dinner_saturday" name="dinner_saturday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="dinner_sunday" name="dinner_sunday">
+                <select class="form-control" id="dinner_sunday" name="dinner_sunday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
           </tr>
@@ -403,37 +487,65 @@
             <th>Snacks</th>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="snacks_monday" name="snacks_monday">
+                <select class="form-control" id="snacks_monday" name="snacks_monday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="snacks_tuesday" name="snacks_tuesday">
+                <select class="form-control" id="snacks_tuesday" name="snacks_tuesday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="snacks_wednesday" name="snacks_wednesday">
+                <select class="form-control" id="snacks_wednesday" name="snacks_wednesday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="snacks_thursday" name="snacks_thursday">
+                <select class="form-control" id="snacks_thursday" name="snacks_thursday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="snacks_friday" name="snacks_friday">
+                <select class="form-control" id="snacks_friday" name="snacks_friday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="snacks_saturday" name="snacks_saturday">
+                <select class="form-control" id="snacks_saturday" name="snacks_saturday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
             <td>
               <div class="form-group">
-                <input type="text" class="form-control" id="snacks_sunday" name="snacks_sunday">
+                <select class="form-control" id="snacks_sunday" name="snacks_sunday">
+                  {% for food in foods %}
+                    <option value="{{ food.id }}">{{ food.name }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </td>
           </tr>
@@ -536,6 +648,16 @@
           <td>{{student_extra.exercise_plan.sunday.set_value}}</td>
           <td>{{student_extra.exercise_plan.sunday.repeat_value}}</td>
           <td>Sunday</td>
+        </tr>
+        <tr>
+          <th>Goal</th>
+          <th>Starting Date</th>
+          <th>Program Duration</th>
+        </tr>
+        <tr>
+          <td>{{student_extra.exercise_plan.goal}}</td>
+          <td>{{student_extra.exercise_plan.starting_date}}</td>
+          <td>{{student_extra.exercise_plan.plan_duration}}</td>
         </tr>
       </tbody>
     </table>

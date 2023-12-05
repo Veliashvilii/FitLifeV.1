@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %} My Diet {% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+  <div class="mt-4">
+  <h1><span class="text-green">My</span> Messages</h1>
+  <div class="card-deck mt-4">
+    {% for student_extra in students_extra %}
+    <a href="{% url 'message_teacher_send' %}?student_id={{ student_extra.user.id }}">
+      <div class="card mb-4" style="height: 225px;">
+        <div class="d-flex align-items-center">
+          {% if student_extra.profile_picture %}
+            <div class="rounded-circle overflow-hidden mr-3" style="width: 130px; height: 130px; margin: 40px 20px;">
+              <img src="{{ student_extra.profile_picture.url }}" class="card-img-top w-100 h-100" alt="{{ student_extra.user.first_name }} {{ student_extra.user.last_name }}">
+            </div>
+          {% else %}
+            <p>No Profile Photo</p>
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ student_extra.user.first_name }} {{ student_extra.user.last_name }}</h5>
+            <p class="card-text">Email: {{ student_extra.user.email }}</p>
+            <p class="card-text">Phone Number: {{ student_extra.phone_number }}</p>
+          </div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+</div>
+{% endblock %}
+
+{% block style %}
+<style>
+  .text-green{
+    color: #50a85e;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .main-footer {
+    text-align: center;
+    background: #50a85e;
+    color: #FFFFFF;
+    padding: 20px;
+    margin-top: 10px;
+  }
+
+  .rounded-circle {
+    border-radius: 50%;
+    overflow: hidden;
+  }
+</style>
+{% endblock %}
