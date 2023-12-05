@@ -8,10 +8,7 @@ from .models import (
     UserCurrent,
     ExercisePlan,
     Movement,
-    ExerciseMovement,
-    DailyPlanExercise,
     Food,
-    DailyPlanFood,
     FoodPlan,
 )
 
@@ -25,16 +22,19 @@ def user_home(request):
 def user_diet(request):
     user = request.user
     user_extra = UserExtra.objects.get(user=user)
-    user_current = UserCurrent.objects.get(user=user)
+    user_extra.current_info, created = UserCurrent.objects.get_or_create()
+
     if request.method == "POST":
         form_type = request.POST.get("form_type")
         if form_type == "current_info":
-            user_current.weight_kg = request.POST.get("weight")
-            user_current.height_cm = request.POST.get("height")
-            user_current.body_fat_percentage = request.POST.get("body_fat_percentage")
-            user_current.muscle_mass_kg = request.POST.get("muscle_mass_kg")
-            user_current.bmi = request.POST.get("bmi")
-            user_current.save()
+            user_extra.current_info.weight_kg = request.POST.get("weight")
+            user_extra.current_info.height_cm = request.POST.get("height")
+            user_extra.current_info.body_fat_percentage = request.POST.get(
+                "body_fat_percentage"
+            )
+            user_extra.current_info.muscle_mass_kg = request.POST.get("muscle_mass_kg")
+            user_extra.current_info.bmi = request.POST.get("bmi")
+            user_extra.current_info.save()
             return render(request, "users/mydiet.html")
 
     return render(
@@ -99,7 +99,7 @@ def teacher_home(request):
 
 def teachers_students(request):
     teacher = request.user
-    teacher_extra = TeacherExtra.objects.get(user=teacher)
+    teacher_extra, created = TeacherExtra.objects.get_or_create(user=teacher)
     if request.method == "GET":
         students = teacher_extra.students.all()
         students_extra = UserExtra.objects.filter(user__in=students)
@@ -119,86 +119,111 @@ def teachers_students(request):
 
 def teachers_students_info(request):
     student_id = request.GET.get("student_id")
-    student_extra = get_object_or_404(UserExtra, user__id=student_id)
-    student_current, created = UserCurrent.objects.get_or_create(
-        user=student_extra.user
-    )
+    student_extra, created = UserExtra.objects.get_or_create(user__id=student_id)
+    student_extra.current_info, created = UserCurrent.objects.get_or_create()
+    student_extra.exercise_plan, created = ExercisePlan.objects.get_or_create()
     movements = Movement.objects.all()
     if request.method == "GET":
+        # exercise_plan = student_extra.exercise_plan
         return render(
             request,
             "users/teachersStudentInfo.html",
             {
                 "student_extra": student_extra,
-                "student_current": student_current,
+                "student_current": student_extra.current_info,
                 "movements": movements,
+                "student_extra.exercise_plan": student_extra.exercise_plan,
             },
         )
-
     elif request.method == "POST":
         form_type = request.POST.get("form_type")
         if form_type == "exercise_form":
-            exercise_plan, created = ExercisePlan.objects.get_or_create(
-                user=student_extra.user
+            student_id = request.GET.get("student_id")
+            student_extra, created = UserExtra.objects.get_or_create(
+                user__id=student_id
             )
-            daily_plan, created = DailyPlanExercise.objects.get_or_create(
-                exerciseplan=exercise_plan
-            )
-            exercises, created = ExerciseMovement.objects.get_or_create(
-                dailyplanexercise=daily_plan
-            )
-            movement_id = request.POST.get("movement_type")
-            if movement_id:
-                movement_type = Movement.objects.get(id=movement_id)
-                exercises.movement_type = movement_type
 
-            exercises.set_value = request.POST.get("set_value")
-            exercises.repeat_value = request.POST.get("repeat_value")
-            daily_plan.day = request.POST.get("day")
-            exercise_plan.starting_date = request.POST.get("starting_date")
-            exercise_plan.plan_duration = request.POST.get("program_duration")
+            monday_movement_id = request.POST.get("movement_type_monday")
+            tuesday_movement_id = request.POST.get("movement_type_tuesday")
+            wednesday_movement_id = request.POST.get("movement_type_wednesday")
+            thursday_movement_id = request.POST.get("movement_type_thursday")
+            friday_movement_id = request.POST.get("movement_type_friday")
+            saturday_movement_id = request.POST.get("movement_type_saturday")
+            sunday_movement_id = request.POST.get("movement_type_sunday")
 
-            exercises.save()
-            daily_plan.save()
-            exercise_plan.save()
-        elif form_type == "diet_form":
-            food_plan, created = FoodPlan.objects.get_or_create(user=student_extra.user)
-            diet_daily_plan, created = DailyPlanFood.objects.get_or_create(
-                foodplan=food_plan
-            )
-            food, created = Food.objects.get_or_create(name=request.POST.get("food"))
-            food_plan.cal_goal = request.POST.get("cal_goal")
-            food_plan.goal = request.POST.get("diet_goal")
+            monday_set_id = request.POST.get("set_value_monday")
+            tuesday_set_id = request.POST.get("set_value_tuesday")
+            wednesday_set_id = request.POST.get("set_value_wednesday")
+            thursday_set_id = request.POST.get("set_value_thursday")
+            friday_set_id = request.POST.get("set_value_friday")
+            saturday_set_id = request.POST.get("set_value_saturday")
+            sunday_set_id = request.POST.get("set_value_sunday")
 
-            meal_repast = request.POST.get("repast")
+            monday_repeat_id = request.POST.get("repeat_value_monday")
+            tuesday_repeat_id = request.POST.get("repeat_value_tuesday")
+            wednesday_repeat_id = request.POST.get("repeat_value_wednesday")
+            thursday_repeat_id = request.POST.get("repeat_value_thursday")
+            friday_repeat_id = request.POST.get("repeat_value_friday")
+            saturday_repeat_id = request.POST.get("repeat_value_saturday")
+            sunday_repeat_id = request.POST.get("repeat_value_sunday")
 
-            if meal_repast == "breakfast":
-                diet_daily_plan.breakfast_foods = food
-            elif meal_repast == "lunch":
-                diet_daily_plan.lunch_foods = food
-            elif meal_repast == "dinner":
-                diet_daily_plan.dinner_foods = food
-            elif meal_repast == "snacks":
-                diet_daily_plan.daily_snacks = food
+            if monday_movement_id != 0:
+                student_extra.exercise_plan.monday = Movement.objects.get(
+                    id=monday_movement_id
+                )
+                student_extra.exercise_plan.monday.set_value = monday_set_id
+                student_extra.exercise_plan.monday.repeat_value = monday_repeat_id
 
-            food.save()
-            diet_daily_plan.save()
-            food_plan.save()
+            if tuesday_movement_id != 0:
+                student_extra.exercise_plan.tuesday = Movement.objects.get(
+                    id=tuesday_movement_id
+                )
+                student_extra.exercise_plan.tuesday.set_value = tuesday_set_id
+                student_extra.exercise_plan.tuesday.repeat_value = tuesday_repeat_id
 
-        return render(
-            request,
-            "users/teachersStudentInfo.html",
-            {
-                "student_extra": student_extra,
-                "student_current": student_current,
-                "movements": movements,
-            },
-        )
+            if wednesday_movement_id != 0:
+                student_extra.exercise_plan.wednesday = Movement.objects.get(
+                    id=wednesday_movement_id
+                )
+                student_extra.exercise_plan.wednesday.set_value = wednesday_set_id
+                student_extra.exercise_plan.wednesday.repeat_value = wednesday_repeat_id
+
+            if thursday_movement_id != 0:
+                student_extra.exercise_plan.thursday = Movement.objects.get(
+                    id=thursday_movement_id
+                )
+                student_extra.exercise_plan.thursday.set_value = thursday_set_id
+                student_extra.exercise_plan.thursday.repeat_value = thursday_repeat_id
+
+            if friday_movement_id != 0:
+                student_extra.exercise_plan.friday = Movement.objects.get(
+                    id=friday_movement_id
+                )
+                student_extra.exercise_plan.friday.set_value = friday_set_id
+                student_extra.exercise_plan.friday.repeat_value = friday_repeat_id
+
+            if saturday_movement_id != 0:
+                student_extra.exercise_plan.saturday = Movement.objects.get(
+                    id=saturday_movement_id
+                )
+                student_extra.exercise_plan.saturday.set_value = saturday_set_id
+                student_extra.exercise_plan.saturday.repeat_value = saturday_repeat_id
+
+            if sunday_movement_id != 0:
+                student_extra.exercise_plan.sunday = Movement.objects.get(
+                    id=sunday_movement_id
+                )
+                student_extra.exercise_plan.sunday.set_value = sunday_set_id
+                student_extra.exercise_plan.sunday.repeat_value = sunday_repeat_id
+
+            student_extra.exercise_plan.save()
+
+            return HttpResponse(student_extra.exercise_plan.sunday)
 
 
 def teacher_profile(request):
     teacher = request.user
-    teacher_extra = TeacherExtra.objects.get(user=teacher)
+    teacher_extra, created = TeacherExtra.objects.get_or_create(user=teacher)
     if request.method == "GET":
         return render(
             request,

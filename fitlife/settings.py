@@ -81,7 +81,7 @@ WSGI_APPLICATION = "fitlife.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "mydatabase.sqlite3",
+        "NAME": BASE_DIR / "mydatabase4.sqlite3",
     }
 }
 
